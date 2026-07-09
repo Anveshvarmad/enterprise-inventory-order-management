@@ -1,0 +1,281 @@
+type Query {
+    dashboardSummary: DashboardSummary!
+
+    products(
+        search: String,
+        categoryId: Int,
+        supplierId: Int,
+        status: ProductStatus,
+        page: Int,
+        size: Int
+    ): ProductPage!
+
+    product(id: Int!): Product
+
+    inventory(
+        productId: Int,
+        warehouseId: Int,
+        lowStock: Boolean,
+        page: Int,
+        size: Int
+    ): InventoryPage!
+
+    inventoryItem(id: Int!): Inventory
+
+    lowStockInventory(page: Int, size: Int): InventoryPage!
+
+    orders(
+        search: String,
+        customerId: Int,
+        orderStatus: OrderStatus,
+        paymentStatus: PaymentStatus,
+        shipmentStatus: ShipmentStatus,
+        page: Int,
+        size: Int
+    ): OrderPage!
+
+    order(id: Int!): Order
+
+    categories: [Category!]!
+    suppliers: [Supplier!]!
+    warehouses: [Warehouse!]!
+    customers: [Customer!]!
+}
+
+type Mutation {
+    createProduct(input: ProductCreateInput!): Product!
+    updateProduct(id: Int!, input: ProductUpdateInput!): Product!
+    deleteProduct(id: Int!): Boolean!
+
+    createOrder(input: OrderCreateInput!): Order!
+    cancelOrder(id: Int!): Order!
+    markOrderAsPaid(id: Int!): Order!
+    shipOrder(id: Int!): Order!
+
+    adjustStock(input: StockAdjustmentInput!): Inventory!
+    reserveStock(input: InventoryReservationInput!): Inventory!
+    releaseReservation(input: InventoryReservationInput!): Inventory!
+    transferStock(input: InventoryTransferInput!): Inventory!
+}
+
+type ProductPage {
+    content: [Product!]!
+    page: Int!
+    size: Int!
+    totalElements: Int!
+    totalPages: Int!
+    first: Boolean!
+    last: Boolean!
+}
+
+type InventoryPage {
+    content: [Inventory!]!
+    page: Int!
+    size: Int!
+    totalElements: Int!
+    totalPages: Int!
+    first: Boolean!
+    last: Boolean!
+}
+
+type OrderPage {
+    content: [Order!]!
+    page: Int!
+    size: Int!
+    totalElements: Int!
+    totalPages: Int!
+    first: Boolean!
+    last: Boolean!
+}
+
+type Product {
+    id: Int!
+    sku: String!
+    name: String!
+    description: String
+    category: Category
+    supplier: Supplier
+    unitPrice: String!
+    reorderLevel: Int!
+    status: ProductStatus!
+    createdAt: String
+    updatedAt: String
+}
+
+type Category {
+    id: Int!
+    name: String!
+    description: String
+}
+
+type Supplier {
+    id: Int!
+    name: String!
+    contactEmail: String
+    phone: String
+    status: String
+}
+
+type Warehouse {
+    id: Int!
+    name: String!
+    code: String!
+    location: String
+    capacity: Int
+    status: String
+}
+
+type Customer {
+    id: Int!
+    firstName: String!
+    lastName: String!
+    fullName: String!
+    email: String!
+    phone: String
+    status: String
+}
+
+type Inventory {
+    id: Int!
+    productId: Int!
+    sku: String!
+    productName: String!
+    warehouseId: Int!
+    warehouseName: String!
+    warehouseCode: String!
+    quantityOnHand: Int!
+    reservedQuantity: Int!
+    availableQuantity: Int!
+    reorderLevel: Int!
+    lowStock: Boolean!
+    lastRestockedAt: String
+    createdAt: String
+    updatedAt: String
+}
+
+type Order {
+    id: Int!
+    orderNumber: String!
+    customer: Customer!
+    orderStatus: OrderStatus!
+    paymentStatus: PaymentStatus!
+    shipmentStatus: ShipmentStatus!
+    totalAmount: String!
+    notes: String
+    items: [OrderItem!]!
+    createdAt: String
+    updatedAt: String
+}
+
+type OrderItem {
+    id: Int!
+    productId: Int!
+    sku: String!
+    productName: String!
+    warehouseId: Int!
+    warehouseName: String!
+    warehouseCode: String!
+    quantity: Int!
+    unitPrice: String!
+    lineTotal: String!
+}
+
+type DashboardSummary {
+    totalProducts: Int!
+    activeProducts: Int!
+    lowStockItems: Int!
+    totalOrders: Int!
+    pendingOrders: Int!
+    shippedOrders: Int!
+    totalCustomers: Int!
+    totalWarehouses: Int!
+    totalInventoryUnits: Int!
+    totalOrderValue: String!
+}
+
+input ProductCreateInput {
+    sku: String!
+    name: String!
+    description: String
+    categoryId: Int!
+    supplierId: Int!
+    unitPrice: Float!
+    reorderLevel: Int!
+}
+
+input ProductUpdateInput {
+    sku: String
+    name: String
+    description: String
+    categoryId: Int
+    supplierId: Int
+    unitPrice: Float
+    reorderLevel: Int
+    status: ProductStatus
+}
+
+input OrderCreateInput {
+    customerId: Int!
+    items: [OrderItemCreateInput!]!
+    notes: String
+}
+
+input OrderItemCreateInput {
+    productId: Int!
+    warehouseId: Int!
+    quantity: Int!
+}
+
+input StockAdjustmentInput {
+    productId: Int!
+    warehouseId: Int!
+    quantityChange: Int!
+    notes: String
+}
+
+input InventoryReservationInput {
+    productId: Int!
+    warehouseId: Int!
+    quantity: Int!
+    referenceType: String
+    referenceId: Int
+    notes: String
+}
+
+input InventoryTransferInput {
+    productId: Int!
+    sourceWarehouseId: Int!
+    targetWarehouseId: Int!
+    quantity: Int!
+    notes: String
+}
+
+enum ProductStatus {
+    ACTIVE
+    INACTIVE
+    DISCONTINUED
+}
+
+enum OrderStatus {
+    CREATED
+    CONFIRMED
+    CANCELLED
+    SHIPPED
+    DELIVERED
+}
+
+enum PaymentStatus {
+    PENDING
+    PAID
+    FAILED
+    REFUNDED
+    CANCELLED
+}
+
+enum ShipmentStatus {
+    NOT_SHIPPED
+    PROCESSING
+    SHIPPED
+    DELIVERED
+    CANCELLED
+}
