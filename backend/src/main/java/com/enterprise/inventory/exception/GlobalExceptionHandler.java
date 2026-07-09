@@ -24,6 +24,12 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.CONFLICT, exception.getMessage());
     }
 
+
+    @ExceptionHandler(BusinessRuleException.class)
+    public ResponseEntity<Map<String, Object>> handleBusinessRule(BusinessRuleException exception) {
+        return buildResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException exception) {
         Map<String, String> validationErrors = new LinkedHashMap<>();

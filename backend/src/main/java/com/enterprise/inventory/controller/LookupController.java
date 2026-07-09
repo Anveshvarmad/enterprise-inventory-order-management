@@ -2,8 +2,10 @@ package com.enterprise.inventory.controller;
 
 import com.enterprise.inventory.dto.CategoryResponse;
 import com.enterprise.inventory.dto.SupplierResponse;
+import com.enterprise.inventory.dto.WarehouseResponse;
 import com.enterprise.inventory.repository.CategoryRepository;
 import com.enterprise.inventory.repository.SupplierRepository;
+import com.enterprise.inventory.repository.WarehouseRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,13 +16,16 @@ public class LookupController {
 
     private final CategoryRepository categoryRepository;
     private final SupplierRepository supplierRepository;
+    private final WarehouseRepository warehouseRepository;
 
     public LookupController(
             CategoryRepository categoryRepository,
-            SupplierRepository supplierRepository
+            SupplierRepository supplierRepository,
+            WarehouseRepository warehouseRepository
     ) {
         this.categoryRepository = categoryRepository;
         this.supplierRepository = supplierRepository;
+        this.warehouseRepository = warehouseRepository;
     }
 
     @GetMapping("/api/lookups/categories")
@@ -36,6 +41,14 @@ public class LookupController {
         return supplierRepository.findAll()
                 .stream()
                 .map(SupplierResponse::from)
+                .toList();
+    }
+
+    @GetMapping("/api/lookups/warehouses")
+    public List<WarehouseResponse> getWarehouses() {
+        return warehouseRepository.findAllByOrderByNameAsc()
+                .stream()
+                .map(WarehouseResponse::from)
                 .toList();
     }
 }
