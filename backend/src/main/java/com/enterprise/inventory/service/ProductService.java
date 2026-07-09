@@ -1,5 +1,6 @@
 package com.enterprise.inventory.service;
 
+import com.enterprise.inventory.config.CacheNames;
 import com.enterprise.inventory.dto.ProductCreateRequest;
 import com.enterprise.inventory.dto.ProductResponse;
 import com.enterprise.inventory.dto.ProductUpdateRequest;
@@ -13,6 +14,9 @@ import com.enterprise.inventory.repository.CategoryRepository;
 import com.enterprise.inventory.repository.ProductRepository;
 import com.enterprise.inventory.repository.SupplierRepository;
 import jakarta.persistence.criteria.Predicate;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -53,12 +57,14 @@ public class ProductService {
                 .map(ProductResponse::from);
     }
 
+    @Cacheable(value = CacheNames.PRODUCT_DETAIL, key = "#id")
     @Transactional(readOnly = true)
     public ProductResponse getProductById(Long id) {
         Product product = findProduct(id);
         return ProductResponse.from(product);
     }
 
+    @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
     @Transactional
     public ProductResponse createProduct(ProductCreateRequest request) {
         String normalizedSku = normalizeSku(request.sku());
@@ -84,6 +90,10 @@ public class ProductService {
         return ProductResponse.from(savedProduct);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = CacheNames.PRODUCT_DETAIL, key = "#id"),
+            @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
+    })
     @Transactional
     public ProductResponse updateProduct(Long id, ProductUpdateRequest request) {
         Product product = findProduct(id);
@@ -130,6 +140,10 @@ public class ProductService {
         return ProductResponse.from(updatedProduct);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = CacheNames.PRODUCT_DETAIL, key = "#id"),
+            @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
+    })
     @Transactional
     public void deleteProduct(Long id) {
         Product product = findProduct(id);

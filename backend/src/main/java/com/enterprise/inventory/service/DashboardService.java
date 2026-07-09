@@ -1,7 +1,9 @@
 package com.enterprise.inventory.service;
 
+import com.enterprise.inventory.config.CacheNames;
 import com.enterprise.inventory.dto.DashboardSummaryResponse;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,6 +17,7 @@ public class DashboardService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Cacheable(value = CacheNames.DASHBOARD_SUMMARY, key = "'main'")
     public DashboardSummaryResponse getDashboardSummary() {
         return new DashboardSummaryResponse(
                 queryLong("SELECT COUNT(*) FROM products"),

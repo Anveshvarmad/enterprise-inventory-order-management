@@ -1,5 +1,6 @@
 package com.enterprise.inventory.service;
 
+import com.enterprise.inventory.config.CacheNames;
 import com.enterprise.inventory.dto.InventoryReservationRequest;
 import com.enterprise.inventory.dto.InventoryResponse;
 import com.enterprise.inventory.dto.InventoryTransferRequest;
@@ -15,6 +16,7 @@ import com.enterprise.inventory.repository.InventoryRepository;
 import com.enterprise.inventory.repository.InventoryTransactionRepository;
 import com.enterprise.inventory.repository.ProductRepository;
 import com.enterprise.inventory.repository.WarehouseRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -64,6 +66,7 @@ public class InventoryService {
                 .map(InventoryResponse::from);
     }
 
+    @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
     @Transactional
     public InventoryResponse adjustStock(StockAdjustmentRequest request) {
         if (request.quantityChange() == 0) {
@@ -99,6 +102,7 @@ public class InventoryService {
         return InventoryResponse.from(savedInventory);
     }
 
+    @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
     @Transactional
     public InventoryResponse reserveStock(InventoryReservationRequest request) {
         Inventory inventory = findInventoryByProductAndWarehouse(request.productId(), request.warehouseId());
@@ -124,6 +128,7 @@ public class InventoryService {
         return InventoryResponse.from(savedInventory);
     }
 
+    @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
     @Transactional
     public InventoryResponse releaseReservation(InventoryReservationRequest request) {
         Inventory inventory = findInventoryByProductAndWarehouse(request.productId(), request.warehouseId());
@@ -149,6 +154,7 @@ public class InventoryService {
         return InventoryResponse.from(savedInventory);
     }
 
+    @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
     @Transactional
     public InventoryResponse transferStock(InventoryTransferRequest request) {
         if (request.sourceWarehouseId().equals(request.targetWarehouseId())) {

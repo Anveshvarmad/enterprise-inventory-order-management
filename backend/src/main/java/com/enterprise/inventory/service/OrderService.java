@@ -1,5 +1,6 @@
 package com.enterprise.inventory.service;
 
+import com.enterprise.inventory.config.CacheNames;
 import com.enterprise.inventory.dto.OrderCreateRequest;
 import com.enterprise.inventory.dto.OrderItemCreateRequest;
 import com.enterprise.inventory.dto.OrderResponse;
@@ -12,6 +13,7 @@ import com.enterprise.inventory.exception.BusinessRuleException;
 import com.enterprise.inventory.exception.ResourceNotFoundException;
 import com.enterprise.inventory.repository.*;
 import jakarta.persistence.criteria.Predicate;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -75,6 +77,7 @@ public class OrderService {
         return OrderResponse.from(findOrder(id));
     }
 
+    @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
     @Transactional
     public OrderResponse createOrder(OrderCreateRequest request) {
         Customer customer = findCustomer(request.customerId());
@@ -136,6 +139,7 @@ public class OrderService {
         return OrderResponse.from(savedOrder);
     }
 
+    @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
     @Transactional
     public OrderResponse cancelOrder(Long id) {
         CustomerOrder order = findOrder(id);
@@ -176,6 +180,7 @@ public class OrderService {
         return OrderResponse.from(orderRepository.save(order));
     }
 
+    @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
     @Transactional
     public OrderResponse markOrderAsPaid(Long id) {
         CustomerOrder order = findOrder(id);
@@ -193,6 +198,7 @@ public class OrderService {
         return OrderResponse.from(orderRepository.save(order));
     }
 
+    @CacheEvict(value = CacheNames.DASHBOARD_SUMMARY, allEntries = true)
     @Transactional
     public OrderResponse shipOrder(Long id) {
         CustomerOrder order = findOrder(id);
