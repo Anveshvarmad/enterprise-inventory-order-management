@@ -43,10 +43,28 @@ services:
       SPRING_DATASOURCE_PASSWORD: inventory_password
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
+      ML_SERVICE_URL: http://ml-service:8090
     depends_on:
       postgres:
         condition: service_healthy
       redis:
+        condition: service_healthy
+
+  ml-service:
+    build:
+      context: ./ml-service
+      dockerfile: Dockerfile
+    container_name: inventory-ml-service
+    ports:
+      - "8090:8090"
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: inventory_db
+      POSTGRES_USER: inventory_user
+      POSTGRES_PASSWORD: inventory_password
+    depends_on:
+      postgres:
         condition: service_healthy
 
   frontend:
@@ -58,6 +76,7 @@ services:
       - "3000:80"
     depends_on:
       - backend
+      - ml-service
 
 volumes:
   inventory_postgres_data:

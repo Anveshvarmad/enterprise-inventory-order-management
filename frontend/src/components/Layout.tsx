@@ -1,6 +1,7 @@
 import {
   BarChart3,
   Boxes,
+  BrainCircuit,
   ClipboardList,
   LayoutDashboard,
   LogOut,
@@ -15,7 +16,8 @@ const navItems = [
   { path: "/products", label: "Products", icon: PackageSearch },
   { path: "/inventory", label: "Inventory", icon: Warehouse },
   { path: "/orders", label: "Orders", icon: ClipboardList },
-  { path: "/analytics", label: "Analytics", icon: BarChart3 }
+  { path: "/analytics", label: "Analytics", icon: BarChart3 },
+  { path: "/forecast", label: "ML Forecast", icon: BrainCircuit }
 ];
 
 export default function Layout() {

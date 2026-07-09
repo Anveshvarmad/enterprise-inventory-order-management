@@ -4,6 +4,7 @@ import type {
   Category,
   Customer,
   DashboardSummary,
+  DemandForecast,
   InventoryItem,
   Order,
   OrderCreateRequest,
@@ -198,4 +199,9 @@ export async function getDashboardSummary() {
 
 export function getAnalyticsDashboard() {
   return apiGet<AnalyticsDashboard>("/api/analytics/dashboard");
+}
+
+
+export function getDemandForecast() {
+  return apiGet<DemandForecast>("/api/ml/demand-forecast");
 }

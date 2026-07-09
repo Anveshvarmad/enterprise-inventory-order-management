@@ -201,3 +201,32 @@ export type AnalyticsDashboard = {
   warehouseInventory: WarehouseInventoryAnalytics[];
   lowStockRisk: LowStockRisk[];
 };
+
+export type DemandForecastItem = {
+  productId: number;
+  sku: string;
+  productName: string;
+  warehouseId: number;
+  warehouseCode: string;
+  warehouseName: string;
+  quantityOnHand: number;
+  reservedQuantity: number;
+  availableQuantity: number;
+  reorderLevel: number;
+  predictedDemand7Days: number;
+  predictedDailyDemand: number;
+  estimatedDaysUntilStockout: number;
+  recommendedReorderQuantity: number;
+  riskLevel: "HIGH" | "MEDIUM" | "LOW";
+};
+
+export type DemandForecast = {
+  generatedAt: string;
+  modelName: string;
+  modelVersion: string;
+  totalItemsScored: number;
+  highRiskItems: number;
+  mediumRiskItems: number;
+  lowRiskItems: number;
+  forecasts: DemandForecastItem[];
+};
