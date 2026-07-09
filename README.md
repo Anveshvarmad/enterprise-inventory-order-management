@@ -1282,35 +1282,6 @@ docker compose up --build
 
 ---
 
-## Screenshots
-
-Add screenshots here after running the project locally.
-
-```text
-screenshots/
-├── login.png
-├── dashboard.png
-├── products.png
-├── inventory.png
-├── orders.png
-├── analytics.png
-├── ml-forecast.png
-└── chatbot.png
-```
-
-Suggested screenshots:
-
-1. Login page
-2. Dashboard cards
-3. Products table
-4. Inventory table
-5. Order workflow
-6. Analytics charts
-7. ML forecast page
-8. AI chatbot page
-
----
-
 ## What This Project Demonstrates
 
 This project demonstrates practical full-stack engineering skills:
@@ -1330,34 +1301,7 @@ This project demonstrates practical full-stack engineering skills:
 - Dockerizing a multi-service application
 - Writing production-style backend and frontend code
 
----
-
-## Resume Description
-
-```text
-Built an enterprise inventory and order management platform using Spring Boot, React, PostgreSQL, Redis, GraphQL, Docker, and Python FastAPI, supporting product catalog management, warehouse inventory tracking, order processing, JWT authentication, analytics dashboards, ML-based demand forecasting, and an OpenAI-powered operations chatbot.
-```
-
----
-
-## Future Improvements
-
-Possible next improvements:
-
-- Add unit and integration tests
-- Add pagination controls in frontend
-- Add product update form
-- Add advanced order item builder
-- Add audit log UI
-- Add email notifications for low stock
-- Add file export for reports
-- Add production deployment with AWS ECS/EKS
-- Add CI/CD pipeline
-- Add observability with Prometheus and Grafana
-
----
 
 ## Author
-
-Built as a full-stack enterprise software engineering project to demonstrate backend systems, frontend dashboards, database design, caching, machine learning integration, AI integration, and Docker-based architecture.
+Anvesh Varma Dantuluri
 
