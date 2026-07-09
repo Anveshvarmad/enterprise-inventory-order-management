@@ -1,6 +1,7 @@
 import type {
   AnalyticsDashboard,
   AuthResponse,
+  ChatbotResponse,
   Category,
   Customer,
   DashboardSummary,
@@ -204,4 +205,9 @@ export function getAnalyticsDashboard() {
 
 export function getDemandForecast() {
   return apiGet<DemandForecast>("/api/ml/demand-forecast");
+}
+
+
+export function askChatbot(message: string) {
+  return apiPost<ChatbotResponse>("/api/chatbot/ask", { message });
 }

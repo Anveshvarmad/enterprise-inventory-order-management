@@ -44,6 +44,9 @@ services:
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
       ML_SERVICE_URL: http://ml-service:8090
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      OPENAI_API_URL: ${OPENAI_API_URL:-https://api.openai.com/v1/responses}
     depends_on:
       postgres:
         condition: service_healthy

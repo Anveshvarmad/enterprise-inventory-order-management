@@ -230,3 +230,10 @@ export type DemandForecast = {
   lowRiskItems: number;
   forecasts: DemandForecastItem[];
 };
+
+export type ChatbotResponse = {
+  answer: string;
+  model: string;
+  generatedAt: string;
+  dataSources: string[];
+};

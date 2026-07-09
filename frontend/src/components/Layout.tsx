@@ -1,5 +1,6 @@
 import {
   BarChart3,
+  Bot,
   Boxes,
   BrainCircuit,
   ClipboardList,
@@ -17,7 +18,8 @@ const navItems = [
   { path: "/inventory", label: "Inventory", icon: Warehouse },
   { path: "/orders", label: "Orders", icon: ClipboardList },
   { path: "/analytics", label: "Analytics", icon: BarChart3 },
-  { path: "/forecast", label: "ML Forecast", icon: BrainCircuit }
+  { path: "/forecast", label: "ML Forecast", icon: BrainCircuit },
+  { path: "/chatbot", label: "AI Chatbot", icon: Bot }
 ];
 
 export default function Layout() {
