@@ -154,3 +154,50 @@ export type OrderCreateRequest = {
   }[];
   notes?: string;
 };
+
+export type RevenueTrendPoint = {
+  period: string;
+  totalOrders: number;
+  totalRevenue: string;
+};
+
+export type OrderStatusBreakdown = {
+  status: string;
+  count: number;
+};
+
+export type TopProductAnalytics = {
+  productId: number;
+  sku: string;
+  productName: string;
+  totalQuantitySold: number;
+  totalRevenue: string;
+};
+
+export type WarehouseInventoryAnalytics = {
+  warehouseId: number;
+  warehouseName: string;
+  warehouseCode: string;
+  quantityOnHand: number;
+  reservedQuantity: number;
+  availableQuantity: number;
+};
+
+export type LowStockRisk = {
+  productId: number;
+  sku: string;
+  productName: string;
+  warehouseId: number;
+  warehouseName: string;
+  warehouseCode: string;
+  availableQuantity: number;
+  reorderLevel: number;
+};
+
+export type AnalyticsDashboard = {
+  revenueTrend: RevenueTrendPoint[];
+  orderStatusBreakdown: OrderStatusBreakdown[];
+  topProducts: TopProductAnalytics[];
+  warehouseInventory: WarehouseInventoryAnalytics[];
+  lowStockRisk: LowStockRisk[];
+};

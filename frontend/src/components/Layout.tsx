@@ -1,4 +1,5 @@
 import {
+  BarChart3,
   Boxes,
   ClipboardList,
   LayoutDashboard,
@@ -13,7 +14,8 @@ const navItems = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
   { path: "/products", label: "Products", icon: PackageSearch },
   { path: "/inventory", label: "Inventory", icon: Warehouse },
-  { path: "/orders", label: "Orders", icon: ClipboardList }
+  { path: "/orders", label: "Orders", icon: ClipboardList },
+  { path: "/analytics", label: "Analytics", icon: BarChart3 }
 ];
 
 export default function Layout() {

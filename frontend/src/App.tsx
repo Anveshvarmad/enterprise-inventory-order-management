@@ -6,6 +6,7 @@ import DashboardPage from "./pages/DashboardPage";
 import ProductsPage from "./pages/ProductsPage";
 import InventoryPage from "./pages/InventoryPage";
 import OrdersPage from "./pages/OrdersPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   if (!isAuthenticated()) {
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="products" element={<ProductsPage />} />
         <Route path="inventory" element={<InventoryPage />} />
         <Route path="orders" element={<OrdersPage />} />
+        <Route path="analytics" element={<AnalyticsPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

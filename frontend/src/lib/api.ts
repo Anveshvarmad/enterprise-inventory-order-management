@@ -1,4 +1,5 @@
 import type {
+  AnalyticsDashboard,
   AuthResponse,
   Category,
   Customer,
@@ -192,4 +193,9 @@ export async function getDashboardSummary() {
 
   const data = await graphql<{ dashboardSummary: DashboardSummary }>(query);
   return data.dashboardSummary;
+}
+
+
+export function getAnalyticsDashboard() {
+  return apiGet<AnalyticsDashboard>("/api/analytics/dashboard");
 }
